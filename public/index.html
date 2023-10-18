@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- css -->
+    <link rel="stylesheet" href="./assets/css/app.css" />
+    <!-- alpine js -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <!-- glide css -->
+    <link
+      rel="stylesheet"
+      href="/node_modules/@glidejs/glide/dist/css/glide.core.min.css"
+    />
+  </head>
+  <body x-cloak class="font-mono bg-gray-100">
+    <header
+      x-data="{ scrolled: false }"
+      @scroll.window="scrolled = window.scrollY > 80"
+      :class="`sticky top-0 ${ scrolled ? 'bg-gray-50 shadow-md': 'bg-transparent' } py-4 z-30`"
+    >
+      <nav class="container mx-auto flex justify-between items-center">
+        <h1 class="text-3xl"><i>Alpine</i></h1>
+        <ul class="flex gap-10 text-lg tracking-wide">
+          <li>
+            <a @click="scrollToTop()" href="javascript:void(0)">Home</a>
+          </li>
+          <li><a @click="scrollToFaq()" href="javascript:void(0)">faq's</a></li>
+          <li><a @click="scrollToMenu()" href="javascript:void(0)">Menu</a></li>
+          <li><a href="#slider">slider</a></li>
+          <li><a href=""></a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- <h1
+        class="text-3xl"
+        x-data=" {message :'Hello World'}"
+        x-text="message"
+        x-effect="console.log(message)"
+      ></h1> -->
+
+      <section class="container">
+        <div class="flex gap-4 py-10 justify-center items-center">
+          <div class="space-x-4 text-center" x-data="{ count: 0 }">
+            <button
+              class="px-3 py-1 bg-slate-500 rounded-md text-white"
+              x-on:click="count++"
+            >
+              +
+            </button>
+            <span class="px-3 py-1 bg-white rounded-md" x-text="count"></span>
+            <button
+              class="px-3 py-1 bg-slate-500 rounded-md text-white"
+              x-on:click="count--"
+            >
+              -
+            </button>
+            <button
+              class="px-3 py-1 bg-slate-500 rounded-md text-white"
+              x-on:click="count = 0"
+            >
+              Reset
+            </button>
+            <span
+              x-show="count > 0"
+              class="px-3 py-1 bg-white rounded-md"
+              x-text="count"
+            ></span>
+          </div>
+
+          <div
+            x-data="{open:false}"
+            class="bg-gray-100 flex items-center justify-center"
+          >
+            <div class="relative inline-block text-left">
+              <button
+                @click="open = !open"
+                class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
+              >
+                Theme
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 ml-2 -mr-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M6.293 9.293a1 1 0 011.414 0L10 11.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <div
+                x-show="open"
+                @click.outside="open = false"
+                x-cloak
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-90"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                x-transition:leave="transition ease-in duration-300"
+                x-transition:leave-start="opacity-100 transform scale-100"
+                x-transition:leave-end="opacity-0 transform scale-90"
+                class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+              >
+                <div
+                  class="py-2 p-2"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="dropdown-button"
+                >
+                  <a
+                    class="flex rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer"
+                    role="menuitem"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      id="light"
+                      width="18px"
+                      class="mr-2"
+                    >
+                      <path
+                        d="M19 9.199h-.98c-.553 0-1 .359-1 .801 0 .441.447.799 1 .799H19c.552 0 1-.357 1-.799 0-.441-.449-.801-1-.801zM10 4.5A5.483 5.483 0 0 0 4.5 10c0 3.051 2.449 5.5 5.5 5.5 3.05 0 5.5-2.449 5.5-5.5S13.049 4.5 10 4.5zm0 9.5c-2.211 0-4-1.791-4-4 0-2.211 1.789-4 4-4a4 4 0 0 1 0 8zm-7-4c0-.441-.449-.801-1-.801H1c-.553 0-1 .359-1 .801 0 .441.447.799 1 .799h1c.551 0 1-.358 1-.799zm7-7c.441 0 .799-.447.799-1V1c0-.553-.358-1-.799-1-.442 0-.801.447-.801 1v1c0 .553.359 1 .801 1zm0 14c-.442 0-.801.447-.801 1v1c0 .553.359 1 .801 1 .441 0 .799-.447.799-1v-1c0-.553-.358-1-.799-1zm7.365-13.234c.391-.391.454-.961.142-1.273s-.883-.248-1.272.143l-.7.699c-.391.391-.454.961-.142 1.273s.883.248 1.273-.143l.699-.699zM3.334 15.533l-.7.701c-.391.391-.454.959-.142 1.271s.883.25 1.272-.141l.7-.699c.391-.391.454-.961.142-1.274s-.883-.247-1.272.142zm.431-12.898c-.39-.391-.961-.455-1.273-.143s-.248.883.141 1.274l.7.699c.391.391.96.455 1.272.143s.249-.883-.141-1.273l-.699-.7zm11.769 14.031l.7.699c.391.391.96.453 1.272.143.312-.312.249-.883-.142-1.273l-.699-.699c-.391-.391-.961-.455-1.274-.143s-.248.882.143 1.273z"
+                      ></path>
+                    </svg>
+                    Light
+                  </a>
+                  <a
+                    class="flex rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer"
+                    role="menuitem"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      id="moon"
+                      width="18px"
+                      class="mr-2"
+                    >
+                      <path
+                        d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"
+                      ></path>
+                    </svg>
+                    Dark
+                  </a>
+                  <a
+                    class="flex rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer"
+                    role="menuitem"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16px"
+                      class="mr-2"
+                      viewBox="0 0 32 32"
+                      id="desktop"
+                    >
+                      <path
+                        d="M30 2H2a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h9.998c-.004 1.446-.062 3.324-.61 4h-.404A.992.992 0 0 0 10 29c0 .552.44 1 .984 1h10.03A.992.992 0 0 0 22 29c0-.552-.44-1-.984-1h-.404c-.55-.676-.606-2.554-.61-4H30a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM14 24l-.002.004L14 24zm4.002.004L18 24h.002v.004zM30 20H2V4h28v16z"
+                      ></path>
+                    </svg>
+                    System
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- background color changer with name and value -->
+      <section class="container mx-auto">
+        <div
+          x-data="{color: [{name:'ElectricBlue',value:'#7DF9FF'}, {name:'CoralPink',value:'#FF6F61'}, {name:'MidnightPurple',value:'#280137'}, {name:'LemonYellow',value:'#FFFF66'},{name:'RubyRed',value:'#E0115F'}], activeColor: 0}"
+          :class="`py-8 px-4 flex flex-col items-center justify-center gap-3`"
+          :style="`background-color: ${color[activeColor].value};`"
+        >
+          <h1
+            class="text-3xl font-semibold"
+            x-text="'Color Name: ' + color[activeColor].name"
+          ></h1>
+          <h1
+            class="text-3xl font-semibold"
+            x-text="'Color Value : ' + color[activeColor].value"
+          ></h1>
+          <button
+            class="bg-transparent hover:bg-black text-white border-2 border-black font-bold py-2 px-4 rounded"
+            @click="activeColor = (activeColor + 1) % color.length"
+          >
+            change color
+          </button>
+        </div>
+      </section>
+
+      <!-- swiper -->
+      <section class="container mx-auto">
+        <div
+          class="py-8 bg-gray-200"
+          x-data="{reviews:  [
+          {
+            id: 1,
+            name: 'susan smith',
+            job: 'web developer',
+            img: 'https://www.course-api.com/images/people/person-1.jpeg',
+            text: 'I\'m baby meggings twee health goth +1. Bicycle rights tumeric chartreuse before they sold out chambray pop-up. Shaman humblebrag pickled coloring book salvia hoodie, cold-pressed four dollar toast everyday carry',
+          },
+          {
+            id: 2,
+            name: 'anna johnson',
+            job: 'web designer',
+            img: 'https://www.course-api.com/images/people/person-2.jpeg',
+            text: 'Helvetica artisan kinfolk thundercats lumbersual blue bottle. Disrupt glossier gastropub deep v vice franzen hell of brooklyn twee enamel pin fashion axe.photo booth jean shorts artisan narwhal.',
+          },
+          {
+            id: 3,
+            name: 'peter jones',
+            job: 'intern',
+            img: 'https://www.course-api.com/images/people/person-4.jpeg',
+            text: 'Sriracha literally flexitarian irony, vape marfa unicorn. Glossier tattooed 8-bit, fixie waistcoat offal activated charcoal slow-carb marfa hell of pabst raclette post-ironic jianbing swag.',
+          },
+          {
+            id: 4,
+            name: 'bill anderson',
+            job: 'the boss',
+            img: 'https://www.course-api.com/images/people/person-3.jpeg',
+            text: 'Edison bulb put a bird on it humblebrag, marfa pok pok heirloom fashion axe cray stumptown venmo actually seitan. VHS farm-to-table schlitz, edison bulb pop-up 3 wolf moon tote bag street art shabby chic. ',
+          }],activeReview: 0
+        }"
+        >
+          <h2 class="text-3xl font-semibold text-center pb-6">Testimonials</h2>
+          <div
+            class="max-w-[420px] mx-auto flex flex-col justify-center items-center bg-white rounded-xl shadow-md px-3 py-6"
+          >
+            <div class="w-[80px] h-[80px] mb-4">
+              <img
+                class="h-full w-full object-cover rounded-full"
+                x-bind:src="reviews[activeReview].img"
+                alt=""
+              />
+            </div>
+            <div class="text-center">
+              <h3
+                class="text-2xl font-semibold text-black"
+                x-text="reviews[activeReview].name"
+              ></h3>
+              <p
+                class="text-xl font-medium text-blue-400"
+                x-text="reviews[activeReview].job"
+              ></p>
+              <p
+                class="text-sm line-clamp-3 hover:line-clamp-none"
+                x-text="reviews[activeReview].text"
+              ></p>
+              <div class="flex justify-center items-center gap-3 py-2 mt-auto">
+                <button
+                  @click="activeReview = (activeReview - 1 + reviews.length) % reviews.length"
+                  class="bg-gray-200 rounded p-1 cursor-pointer"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.75 19.5L8.25 12l7.5-7.5"
+                    />
+                  </svg>
+                </button>
+
+                <button
+                  @click="activeReview = (activeReview + 1) % reviews.length"
+                  class="bg-gray-200 rounded p-1 cursor-pointer"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div class="pt-3">
+                <button
+                  @click="activeReview = Math.floor(Math.random() * reviews.length)"
+                  class="bg-blue-500 text-white rounded-md px-4 py-2"
+                >
+                  Surprise Me
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- modal -->
+      <section class="container mx-auto">
+        <div x-data="{openModal: false}" class="bg-blue-100 py-10 text-center">
+          <div>
+            <button
+              @click="openModal = true"
+              class="bg-blue-500 text-white p-2 rounded text-2xl font-bold"
+            >
+              Open Modal
+            </button>
+          </div>
+
+          <div
+            x-show="openModal"
+            x-cloak
+            x-init="document.addEventListener('keydown', e => { if (e.key === 'Escape') { openModal = false } })"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 transform scale-90"
+            x-transition:enter-end="opacity-100 transform scale-100"
+            x-transition:leave="transition ease-in duration-300"
+            x-transition:leave-start="opacity-100 transform scale-100"
+            x-transition:leave-end="opacity-0 transform scale-90"
+            class="main-modal fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center"
+            style="background: rgba(0, 0, 0, 0.7)"
+          >
+            <div
+              @click.outside="openModal = false"
+              class="border border-teal-500 modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto"
+            >
+              <div class="modal-content py-4 text-left px-6">
+                <!--Title-->
+                <div class="flex justify-between items-center pb-3">
+                  <p class="text-2xl font-bold">Header</p>
+                  <div
+                    class="modal-close cursor-pointer z-50"
+                    @click="openModal = false"
+                  >
+                    <svg
+                      class="fill-current text-black"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                    >
+                      <path
+                        d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <!--Body-->
+                <div class="my-5">
+                  <p>
+                    Inliberali Persius Multi iustitia pronuntiaret expeteretur
+                    sanos didicisset laus angusti ferrentur arbitrium arbitramur
+                    huic desiderent.?
+                  </p>
+                </div>
+                <!--Footer-->
+                <div class="flex justify-end pt-2">
+                  <button
+                    @click="openModal = false"
+                    class="focus:outline-none modal-close px-4 bg-gray-400 p-3 rounded-lg text-black hover:bg-gray-300"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    class="focus:outline-none px-4 bg-teal-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400"
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- x-model -->
+      <!-- <div
+        x-data="{search:'',placeholder: 'Type anything...'}"
+        class="container mx-auto p-4 bg-gray-100"
+      >
+        <input
+          type="text"
+          :placeholder="placeholder"
+          x-model="search"
+          class="p-2 ring-1 ring-black rounded-md"
+        />
+        <p>
+          you are searching for :
+          <span x-text="search"></span>
+        </p>
+      </div> -->
+
+      <div class="container mx-auto p-8s space-y-8 bg-red-100">
+        <!-- x-for -->
+        <!-- <ul x-data="{ colors: ['Red', 'Orange', 'Yellow'] }">
+          <template x-for="color in colors">
+            <li x-text="color"></li>
+          </template>
+        </ul> -->
+
+        <!-- <ul
+          x-data="{ colors: [
+          { id: 1, label: 'Red' },
+          { id: 2, label: 'Orange' },
+          { id: 3, label: 'Yellow' },
+      ]}"
+        >
+          <template x-for="color in colors" :key="color.id">
+            <li x-text="color.label"></li>
+          </template>
+        </ul> -->
+
+        <!-- <ul x-data="{ colors: ['Red', 'Orange', 'Yellow'] }">
+          <template x-for="(color, index) in colors">
+            <li>
+              <span x-text="index + 1 + ': '"></span>
+              <span x-text="color"></span>
+            </li>
+          </template>
+        </ul> -->
+
+        <!-- don't know why it's not working   -->
+        <!-- <ul>
+          <template x-for="i in 10">
+            <li x-text="i"></li>
+          </template>
+        </ul> -->
+
+        <!-- x-ignore -->
+        <!-- <div x-data="{ label: 'From Alpine' }">
+          <div x-ignore>
+            <span x-text="label"></span>
+          </div>
+        </div> -->
+      </div>
+
+      <!-- todo app -->
+      <section class="">
+        <div class="container mx-auto">
+          <div class="bg-slate-100 py-8 px-4">
+            <div
+              x-data="{todos: [],userInput: ''}"
+              x-effect="console.log(todos)"
+              class="max-w-[420px] mx-auto flex flex-col items-center justify-center py-6 px-4 bg-white rounded-lg shadow-lg space-y-4"
+            >
+              <div class="space-y-4 w-full">
+                <h1 class="text-2xl font-semibold">Todo List</h1>
+                <div class="flex gap-4 !w-full justify-between">
+                  <input
+                    x-data="{placeholder: 'Add Todo...'}"
+                    x-model="userInput"
+                    class="border-2 rounded !w-full py-2 px-3"
+                    placeholder="placeholder"
+                    type="text"
+                  />
+                  <button
+                    type="submit"
+                    @click="if(userInput.trim().length > 2) todos.push({name: userInput,completed:false}); (userInput = '')"
+                    class="flex-no-shrink p-2 border-2 rounded hover:border-black transition-all duration-300 ease-in-out"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+              <template x-for="todo in todos" x-transition>
+                <div class="flex justify-between items-center w-full">
+                  <p
+                    :class="`w-full ${todo.completed ? 'line-through' : ''}`"
+                    x-text="todo.name"
+                  ></p>
+                  <div class="flex gap-2">
+                    <button
+                      @click="todo.completed = !todo.completed"
+                      class="flex-no-shrink p-2 border-2 rounded hover:border-black transition-all duration-300 ease-in-out"
+                    >
+                      Done
+                    </button>
+                    <button
+                      @click="todos = todos.filter(currentTodo => currentTodo !== todo)"
+                      class="flex-no-shrink p-2 border-2 rounded hover:border-black transition-all duration-300 ease-in-out"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </template>
+              <button
+                x-show="todos.length > 0"
+                @click="todos = []"
+                class="`flex-no-shrink p-2 border-2 rounded hover:border-black transition-all duration-300 ease-in-out`"
+              >
+                clear
+              </button>
+              <div class="" x-show="(todos.length > 0)">
+                <span
+                  x-text="todos.filter(todo => todo.completed).length"
+                ></span
+                >/<span x-text="todos.length"></span>
+                completed
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- faq's/accordian -->
+      <section id="faq" class="bg-gray-50">
+        <div class="container mx-auto">
+          <h1 class="text-3xl font-semibold px-4 text-center pt-14">
+            Frequently Asked Questions
+          </h1>
+          <div
+            x-data='{ faqs : [
+              {
+                question: "What is your return policy?",
+                answer: "Our return policy allows you to return or exchange an item within 30 days of purchase. Please refer to our Returns & Exchanges page for more details.",
+                isOpen: false
+              },
+              {
+                question: "How can I track my order?",
+                answer: "To track your order, simply log into your account and go to the Order History page. There you will find the tracking number and a link to the couriers website for real-time updates.",
+                isOpen: false
+              },
+              {
+                question: "What payment methods do you accept?",
+                answer: "We accept all major credit cards, including Visa, Mastercard, and American Express. We also offer the option to pay with PayPal for added convenience.",
+                isOpen: false
+              },
+              {
+                question: "How long does shipping take?",
+                answer: "Shipping times vary depending on your location and the shipping method selected. Generally, orders are processed and shipped within 1-2 business days. You can find more information on our Shipping page.",
+                isOpen: false
+              },
+              {
+                question: "Can I cancel my order?",
+                answer: "If you wish to cancel your order, please contact our customer support team as soon as possible. We will do our best to accommodate your request if the order has not been processed or shipped yet.",
+                isOpen: false
+              },
+              {
+                question: "Do you offer international shipping?",
+                answer: "Yes, we offer international shipping to most countries. Shipping fees and delivery times may vary depending on the destination. Please note that customers are responsible for any customs duties or taxes imposed by their country.",
+                isOpen: false
+              },
+              {
+                question: "How can I contact your customer support?",
+                answer: "Our customer support team is available 24/7. You can reach us through our Contact page, where you will find our email address and phone number. We strive to respond to all inquiries within 24 hours.",
+                isOpen: false
+              },
+              {
+                question: "Can I change my shipping address after placing an order?",
+                answer: "If you need to change your shipping address, please contact our customer support team as soon as possible. We will do our best to update the address if the order has not been shipped yet.",
+                isOpen: false
+              },
+              {
+                question: "Are your products covered by a warranty?",
+                answer: "Yes, all our products come with a standard manufacturers warranty. The duration and coverage may vary depending on the product. Please refer to the product description or contact our customer support for more information.",
+                isOpen: false
+              },
+              {
+                question: "How do I return a faulty item?",
+                answer: "If you received a faulty item, please contact our customer support team within 7 days of receiving the order. We will provide you with instructions on how to return the item and arrange for a replacement or refund.",
+                isOpen: false
+              },
+              {
+                question: "Can I make changes to my order after it has been placed?",
+                answer: "If you need to make changes to your order, such as adding or removing items, please contact our customer support team as soon as possible. We will do our best to accommodate your request if the order has not been processed or shipped yet.",
+                isOpen: false
+              }
+            ]}'
+            class="min-h-screen py-6 flex flex-col items-center justify-center relative overflow-hidden sm:py-12 space-y-4"
+          >
+            <template x-for="(item, index) in faqs" :key="index">
+              <div class="max-w-[420px] w-full mx-auto">
+                <div
+                  @click="item.isOpen = !item.isOpen"
+                  class="p-4 bg-blue-100 w-full rounded flex justify-between items-center cursor-pointer"
+                >
+                  <div class="flex items-center gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6 text-blue-500 flex-shrink-0"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"
+                      />
+                    </svg>
+                    <h4
+                      class="font-medium text-sm text-blue-500"
+                      x-text="item.question"
+                    ></h4>
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    :class="`${item.isOpen ? 'rotate-180' : 'rotate-0'}`"
+                    class="h-4 w-4 text-blue-500 duration-300 flex-shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+                <div
+                  x-show="item.isOpen"
+                  @click.outside="item.isOpen = false"
+                  x-transition:enter="transition ease-out duration-300"
+                  x-transition:enter-start="opacity-0 transform scale-90"
+                  x-transition:enter-end="opacity-100 transform scale-100"
+                  class="w-full bg-white p-4"
+                >
+                  <h4 class="text-sm text-slate-400" x-text="item.answer"></h4>
+
+                  <button
+                    class="bg-blue-500 p-2 text-sm text-white font-bold rounded mt-4"
+                  >
+                    Get Help
+                  </button>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </section>
+
+      <!-- menu -->
+      <!-- <section
+        id="menu"
+        class="bg-blue-50 py-16"
+        x-data="{ posts: [] }"
+        x-init="fetchPosts((data) => posts = data)"
+      >
+        <h1 class="text-center text-3xl font-semibold">Menu</h1>
+        <div class="flex justify-center items-center gap-4 py-8">
+          <button
+            @click="fetchPosts((data) => posts = data )"
+            class="flex-no-shrink p-2 border-2 rounded hover:border-black transition-all duration-300 ease-in-out"
+          >
+            All
+          </button>
+          <button
+            @click="fetchPosts((data) => posts = data.filter(post => post.category === 'skincare'))"
+            class="flex-no-shrink p-2 border-2 rounded hover:border-black transition-all duration-300 ease-in-out"
+          >
+            skincare
+          </button>
+          <button
+            @click="fetchPosts((data) => posts = data.filter(post => post.category === 'groceries' ))"
+            class="flex-no-shrink p-2 border-2 rounded hover:border-black transition-all duration-300 ease-in-out"
+          >
+            groceries
+          </button>
+          <button
+            @click="fetchPosts((data) => posts = data.filter(post => post.category === 'home-decoration' ))"
+            class="flex-no-shrink p-2 border-2 rounded hover:border-black transition-all duration-300 ease-in-out"
+          >
+            home-decoration
+          </button>
+        </div>
+        <div
+          class="container mx-auto text-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-x-5 gap-y-6"
+        >
+          <template x-for="post in posts" :key="post.id">
+            <div class="flex flex-col justify-center">
+              <div
+                class="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white"
+              >
+                <div class="w-full md:w-1/3 bg-white grid place-items-center">
+                  <img
+                    :src="post.thumbnail"
+                    alt="tailwind logo"
+                    class="rounded-xl aspect-square w-full h-full object-cover"
+                  />
+                </div>
+                <div
+                  class="w-full md:w-2/3 bg-white flex flex-col space-y-2 p-3"
+                >
+                  <div class="flex justify-between item-center">
+                    <p
+                      class="text-gray-500 font-medium hidden md:block"
+                      x-text="post.category"
+                    ></p>
+                    <div class="flex items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 text-yellow-500"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                        />
+                      </svg>
+                      <p
+                        class="text-gray-600 font-bold text-sm ml-1"
+                        x-text="post.rating"
+                      >
+                        >
+                      </p>
+                    </div>
+                    <div
+                      class="bg-gray-200 px-3 py-1 rounded-full text-xs font-medium text-gray-800 hidden md:block"
+                    >
+                      <span x-text="post.discountPercentage"></span>% off
+                    </div>
+                  </div>
+                  <h3
+                    class="font-black text-gray-800 md:text-3xl text-xl"
+                    x-text="post.title"
+                  ></h3>
+                  <p
+                    class="md:text-lg text-gray-500 text-base"
+                    x-text="post.description"
+                  ></p>
+                  <p class="text-xl font-black text-gray-800">
+                    $
+                    <span x-text="post.price">/night</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </section> -->
+
+      <!-- preloader -->
+      <div
+        x-data="{ preloaderVisible: true }"
+        x-init="window.addEventListener('load', function() { preloaderVisible = false; })"
+      >
+        <div
+          x-show="preloaderVisible"
+          class="preloader bg-black min-h-screen w-full absolute inset-0 flex justify-center items-center"
+          x-transition
+        >
+          <h2 class="text-3xl font-semibold text-white">Loading...</h2>
+        </div>
+      </div>
+
+      <!-- slider -->
+      <section id="slider" class="pb-16">
+        <div class="container">
+          <div class="text-center py-16">
+            <h2 class="text-3xl font-semibold">Glide Slider</h2>
+          </div>
+          <div
+            x-data="{ glide: null }"
+            x-ref="glide"
+            class="glide relative"
+            x-init="glide = new Glide($refs.glide, { type: 'slider',
+            perView: 2,
+            breakpoints: {
+              640: {
+                perView: 1,
+              },
+            },
+            gap: 20,});
+            glide.mount();"
+          >
+            <div class="glide__track" data-glide-el="track">
+              <ul class="glide__slides">
+                <li class="glide__slide py-6">
+                  <div
+                    class="max-w-[420px] mx-auto flex flex-col justify-center items-center bg-white rounded-xl shadow-md px-3 py-6"
+                  >
+                    <div class="w-[80px] h-[80px] mb-4">
+                      <img
+                        class="h-full w-full object-cover rounded-full"
+                        src="https://www.course-api.com/images/people/person-1.jpeg"
+                        alt=""
+                      />
+                    </div>
+                    <div class="text-center">
+                      <h3 class="text-2xl font-semibold text-black">
+                        susan smith
+                      </h3>
+                      <p class="text-xl font-medium text-blue-400">
+                        web developer
+                      </p>
+                      <p class="text-sm">
+                        I'm baby meggings twee health goth +1. Bicycle rights
+                        tumeric chartreuse before they sold out chambray pop-up.
+                        Shaman humblebrag pickled coloring book salvia hoodie,
+                        cold-pressed four dollar toast everyday carry
+                      </p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="glide__slide py-6">
+                  <div
+                    class="max-w-[420px] mx-auto flex flex-col justify-center items-center bg-white rounded-xl shadow-md px-3 py-6"
+                  >
+                    <div class="w-[80px] h-[80px] mb-4">
+                      <img
+                        class="h-full w-full object-cover rounded-full"
+                        src="https://www.course-api.com/images/people/person-2.jpeg"
+                        alt=""
+                      />
+                    </div>
+                    <div class="text-center">
+                      <h3 class="text-2xl font-semibold text-black">
+                        anna johnson
+                      </h3>
+                      <p class="text-xl font-medium text-blue-400">
+                        web designer
+                      </p>
+                      <p class="text-sm">
+                        I'm baby meggings twee health goth +1. Bicycle rights
+                        tumeric chartreuse before they sold out chambray pop-up.
+                        Shaman humblebrag pickled coloring book salvia hoodie,
+                        cold-pressed four dollar toast everyday
+                      </p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="glide__slide py-6">
+                  <div
+                    class="max-w-[420px] mx-auto flex flex-col justify-center items-center bg-white rounded-xl shadow-md px-3 py-6"
+                  >
+                    <div class="w-[80px] h-[80px] mb-4">
+                      <img
+                        class="h-full w-full object-cover rounded-full"
+                        src="https://www.course-api.com/images/people/person-4.jpeg"
+                        alt=""
+                      />
+                    </div>
+                    <div class="text-center">
+                      <h3 class="text-2xl font-semibold text-black">
+                        peter jones
+                      </h3>
+                      <p class="text-xl font-medium text-blue-400">intern</p>
+                      <p class="text-sm">
+                        I'm baby meggings twee health goth +1. Bicycle rights
+                        tumeric chartreuse before they sold out chambray pop-up.
+                        Shaman humblebrag pickled coloring book salvia hoodie,
+                        cold-pressed four dollar toast everyday carry
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="glide__arrows" data-glide-el="controls">
+              <button
+                class="glide__arrow glide__arrow--left bg-white rounded-full p-2.5 shadow absolute top-[50%] translate-y-[-50%] left-0"
+                data-glide-dir="<"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
+                  />
+                </svg>
+              </button>
+              <button
+                class="glide__arrow glide__arrow--right bg-white rounded-full p-2.5 shadow absolute top-[50%] translate-y-[-50%] right-0"
+                data-glide-dir=">"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- tabs -->
+      <section class="py-16" x-data="{activeTab: 'first-tab'}">
+        <div class="container">
+          <div class="text-center">
+            <div
+              class="bg-slate-200 rounded-full border border-gray-300 w-fit mx-auto p-1 space-x-4ss relative z-10 overflow-hidden"
+            >
+              <div
+                :class="`${activeTab === 'first-tab' ? 'left-0' : ''} ${activeTab === 'second-tab' ? 'left-[calc(50%-16.5%)]': ''} ${activeTab === 'third-tab' ? 'left-[calc(100%-33.3333%)]': ''}`"
+                class="absolute bg-white rounded-full h-[calc(100%-8px)] w-[calc(33%-8px)] -z-10 shadow-md transform ease-in-out duration-300 mx-1"
+              ></div>
+              <button @click="activeTab = 'first-tab'" class="py-2 px-4">
+                First Tab
+              </button>
+              <button @click="activeTab = 'second-tab'" class="py-2 px-4">
+                Second Tab
+              </button>
+              <button @click="activeTab = 'third-tab'" class="py-2 px-4">
+                Third Tab
+              </button>
+            </div>
+          </div>
+          <div class="pt-10">
+            <div
+              x-show="activeTab === 'first-tab'"
+              x-transition:enter="transition ease-out duration-500"
+              x-transition:enter-start="opacity-0 transform scale-90"
+              x-transition:enter-end="opacity-100 transform scale-100"
+              class="bg-white rounded-3xl border border-gray-300 mx-auto p-4 md:p-10 space-y-10"
+            >
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
+                quaerat culpa at dolor illum vel minus. Accusamus similique,
+                fugit maiores est aut facilis omnis sapiente ratione impedit
+                excepturi neque quas provident laborum nobis porro eaque earum
+                nesciunt necessitatibus perspiciatis ipsam!
+              </p>
+
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
+                quaerat culpa at dolor illum vel minus. Accusamus similique,
+                fugit maiores est aut facilis omnis sapiente ratione impedit
+                excepturi neque quas provident laborum nobis porro eaque earum
+                nesciunt necessitatibus perspiciatis ipsam!
+              </p>
+
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
+                quaerat culpa at dolor illum vel minus. Accusamus similique,
+                fugit maiores est aut facilis omnis sapiente ratione impedit
+                excepturi neque quas provident laborum nobis porro eaque earum
+                nesciunt necessitatibus perspiciatis ipsam!
+              </p>
+            </div>
+
+            <div
+              x-show="activeTab === 'second-tab'"
+              x-transition:enter="transition ease-out duration-500"
+              x-transition:enter-start="opacity-0 transform scale-90"
+              class="bg-white rounded-3xl border border-gray-300 mx-auto p-4 md:p-10 space-y-10"
+            >
+              <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Deleniti et consequuntur commodi maiores illo sunt dolor
+                incidunt? Nobis distinctio vel vero quos minus. Odit non quasi
+                inventore. Ullam consequatur ut ratione odio, laudantium illum
+                neque quaerat sint dolorem laboriosam obcaecati.
+              </p>
+
+              <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Deleniti et consequuntur commodi maiores illo sunt dolor
+                incidunt? Nobis distinctio vel vero quos minus. Odit non quasi
+                inventore. Ullam consequatur ut ratione odio, laudantium illum
+                neque quaerat sint dolorem laboriosam obcaecati.
+              </p>
+
+              <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Deleniti et consequuntur commodi maiores illo sunt dolor
+                incidunt? Nobis distinctio vel vero quos minus. Odit non quasi
+                inventore. Ullam consequatur ut ratione odio, laudantium illum
+                neque quaerat sint dolorem laboriosam obcaecati.
+              </p>
+            </div>
+
+            <div
+              class="bg-white rounded-3xl border border-gray-300 mx-auto p-4 md:p-10 space-y-10"
+              x-show="activeTab === 'third-tab'"
+              x-transition:enter="transition ease-out duration-500"
+              x-transition:enter-start="opacity-0 transform scale-90"
+              x-transition:enter-end="opacity-100 transform scale-100"
+            >
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Sapiente aspernatur architecto cumque nesciunt fugit at
+                inventore eius fugiat aliquam nihil magni laudantium et porro
+                voluptate repellendus blanditiis, rem est vero veritatis quo?
+                Corrupti odit magnam aliquam sapiente at, unde soluta!
+              </p>
+
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Sapiente aspernatur architecto cumque nesciunt fugit at
+                inventore eius fugiat aliquam nihil magni laudantium et porro
+                voluptate repellendus blanditiis, rem est vero veritatis quo?
+                Corrupti odit magnam aliquam sapiente at, unde soluta!
+              </p>
+
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Sapiente aspernatur architecto cumque nesciunt fugit at
+                inventore eius fugiat aliquam nihil magni laudantium et porro
+                voluptate repellendus blanditiis, rem est vero veritatis quo?
+                Corrupti odit magnam aliquam sapiente at, unde soluta!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="text-center" x-data>
+      <p>Copyright &copy; <span x-text="new Date().getFullYear()"></span></p>
+    </footer>
+
+    <script>
+      function fetchPosts(callback) {
+        fetch("https://dummyjson.com/products", { method: "GET" })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data.products[0]);
+            callback(data.products.slice(15));
+          })
+          .catch((err) => {
+            console.log("Error fetching data", err);
+          });
+      }
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      function scrollToFaq() {
+        const faq = document.getElementById("faq");
+        const offset = 70;
+        const faqTop = faq.offsetTop - offset;
+        window.scrollTo({ top: faqTop, behavior: "smooth" });
+      }
+      function scrollToMenu() {
+        const menu = document.getElementById("menu");
+        const offset = 70;
+        const menuTop = menu.offsetTop - offset;
+        window.scrollTo({ top: menuTop, behavior: "smooth" });
+      }
+    </script>
+
+    <script src="/node_modules/@glidejs/glide/dist/glide.min.js"></script>
+    <!-- <script>
+      new Glide(".glide", {
+        type: "slider",
+        // focusAt: "center",
+        // startAt: 1,
+        // autoplay: 5000,
+        perView: 2,
+        breakpoints: {
+          640: {
+            perView: 1,
+          },
+        },
+        gap: 20,
+      }).mount();
+    </script> -->
+  </body>
+</html>

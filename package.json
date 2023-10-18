@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "watch": "npx tailwindcss -i tailwind.css -o ./public/assets/css/app.css --watch",
+    "build": "npx tailwindcss -i tailwind.css -o ./public/assets/css/app.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  },
+  "dependencies": {
+    "@glidejs/glide": "^3.6.0"
+  }
+}
